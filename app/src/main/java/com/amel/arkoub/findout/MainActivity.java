@@ -1,5 +1,6 @@
 package com.amel.arkoub.findout;
 
+import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.io.File;
@@ -120,23 +122,27 @@ public class MainActivity extends AppCompatActivity {
 
             StringBuilder text = new StringBuilder();
 
+            //ListView files = new ListView();
+
             switch(getArguments().getInt(ARG_SECTION_NUMBER)){
                 case 1 :
 
                     textView.setText("All");
                     text.append("All\n\n");
 
-                    File f = new File("/");
+                    File f = Environment.getExternalStorageDirectory();
 
-                    for(File file :f.listFiles()){
-                        if(file.isDirectory()){
-                            text.append("Directory : "+file.getName()+"\n");
-                        }else{
-                            text.append("File : "+file.getName()+"\n");
+                    if(f!=null && f.listFiles()!=null) {
+                        for (File file : f.listFiles()) {
+                            if (file.isDirectory()) {
+                                text.append("Directory : " + file.getName() + "\n");
+                            } else {
+                                text.append("File : " + file.getName() + "\n");
+                            }
                         }
-                    }
 
-                    textView.setText(text);
+                        textView.setText(text);
+                    }
 
                     break;
                 case 2 :
@@ -181,4 +187,6 @@ public class MainActivity extends AppCompatActivity {
             return 3;
         }
     }
+
+
 }
